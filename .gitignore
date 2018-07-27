@@ -1,4 +1,6 @@
-Assets/pdal/Examples/output_*.las
+Assets/pdal/Examples/output_*.las*
+Assets/pdal/Dll/*.exe*
+Assets/pdal/Dll/*.bat*
 
 *~
 *.swp
