@@ -1,6 +1,9 @@
+Assets/pdal/Examples/output_*.las
+
 *~
 *.swp
 *.bak
+*.log
 
 [Ll]ibrary/
 [Tt]emp/
