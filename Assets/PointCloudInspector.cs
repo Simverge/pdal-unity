@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PointCloudInspector : MonoBehaviour
 {
 	private void Start()
 	{
-        string cwd = Environment.CurrentDirectory;
-
-        Environment.SetEnvironmentVariable("GDAL_DATA", cwd + "/Assets/gdal/Data");
-        Environment.SetEnvironmentVariable("PROJ_LIB", cwd + "/Assets/proj4/Data");
-
         pdal.Config config = new pdal.Config();
+        Debug.Log("GDAL Data Path: " + config.GdalData);
+        Debug.Log("Proj4 Data Path: " + config.Proj4Data);
+
         Debug.Log("PDAL Version Integer: " + config.VersionInteger);
         Debug.Log("PDAL Version Major: " + config.VersionMajor);
         Debug.Log("PDAL Version Minor: " + config.VersionMinor);
