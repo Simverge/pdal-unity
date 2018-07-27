@@ -19,6 +19,21 @@ public class PointCloudInspector : MonoBehaviour
         Debug.Log("PDAL Version: " + config.Version);
         Debug.Log("PDAL SHA1: " + config.Sha1);
         Debug.Log("PDAL Debug Info: " + config.DebugInfo);
+
+        string path = "Assets/pdal/Examples/stats.json";
+        string json = File.ReadAllText(path);
+        Debug.Log("Pipeline JSON: " + json);
+
+        pdal.Pipeline pipeline = new pdal.Pipeline(json);
+
+        int level = pipeline.LogLevel;
+        Debug.Log("Log Level: " + level);
+
+        long count = pipeline.Execute();
+        Debug.Log("Executed pipeline - point count: " + count);
+        Debug.Log("Result JSON: " + pipeline.Json);
+
+        pipeline.Dispose();
     }
 
 }
