@@ -16,10 +16,10 @@ namespace pdal
 		private const string PDALC_LIBRARY = "pdalc";
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetGdalDataPath")]
-		private static extern int getGdalDataPath([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int getGdalDataPath([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetProj4DataPath")]
-		private static extern int getProj4DataPath([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int getProj4DataPath([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALSetGdalDataPath")]
 		private static extern void setGdalDataPath(string path);
@@ -28,16 +28,16 @@ namespace pdal
 		private static extern void setProj4DataPath(string path);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALFullVersionString")]
-		private static extern void getFullVersion([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern void getFullVersion([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALVersionString")]
-		private static extern void getVersion([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern void getVersion([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALVersionInteger")]
 		private static extern int getVersionInteger();
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALSha1")]
-		private static extern void getSha1([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern void getSha1([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALVersionMajor")]
 		private static extern int getVersionMajor();
@@ -49,7 +49,7 @@ namespace pdal
 		private static extern int getVersionPatch();
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALDebugInformation")]
-		private static extern void getDebugInfo([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern void getDebugInfo([MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		/**
 		 * Creates a new PDAL configuration.
@@ -75,7 +75,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(256);
-				getGdalDataPath(buffer, buffer.Capacity);
+				getGdalDataPath(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 
@@ -88,7 +88,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(256);
-				getProj4DataPath(buffer, buffer.Capacity);
+				getProj4DataPath(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 
@@ -101,7 +101,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(64);
-				getFullVersion(buffer, buffer.Capacity);
+				getFullVersion(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -112,7 +112,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(64);
-				getVersion(buffer, buffer.Capacity);
+				getVersion(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -134,7 +134,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(64);
-				getSha1(buffer, buffer.Capacity);
+				getSha1(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -163,7 +163,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(1024);
-				getDebugInfo(buffer, buffer.Capacity);
+				getDebugInfo(buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}

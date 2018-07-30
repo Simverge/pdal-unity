@@ -20,16 +20,16 @@ namespace pdal
 		private static extern void dispose(IntPtr pipeline);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPipelineAsString")]
-		private static extern int asString(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int asString(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPipelineMetadata")]
-		private static extern int getMetadata(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int getMetadata(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPipelineSchema")]
-		private static extern int getSchema(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int getSchema(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPipelineLog")]
-		private static extern int getLog(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, int size);
+		private static extern int getLog(IntPtr pipeline, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALSetPipelineLogLevel")]
 		private static extern void setLogLevel(IntPtr pipeline, int level);
@@ -84,7 +84,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(BUFFER_SIZE);
-				asString(mNative, buffer, buffer.Capacity);
+				asString(mNative, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 
@@ -101,7 +101,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(BUFFER_SIZE);
-				getMetadata(mNative, buffer, buffer.Capacity);
+				getMetadata(mNative, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -112,7 +112,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(BUFFER_SIZE);
-				getSchema(mNative, buffer, buffer.Capacity);
+				getSchema(mNative, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -123,7 +123,7 @@ namespace pdal
 			get
 			{
 				StringBuilder buffer = new StringBuilder(BUFFER_SIZE);
-				getLog(mNative, buffer, buffer.Capacity);
+				getLog(mNative, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
