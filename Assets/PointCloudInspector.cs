@@ -45,10 +45,29 @@ public class PointCloudInspector : MonoBehaviour
             pdal.PointLayout layout = view.Layout;
             Debug.Log("\tHas layout? " + (layout != null));
 
-    //        if (layout != null)
-      //      {
+            if (layout != null)
+            {
+                Debug.Log("\tLayout - Point Size: " + layout.PointSize);
+                pdal.DimTypeList types = layout.Types;
+                Debug.Log("\tLayout - Has dimension type list? " + (types != null));
 
-        //    }
+                if (types != null)
+                {
+                    uint size = types.Size;
+                    Debug.Log("\tLayout - Dimension type count:" + size);
+
+                    for (uint i = 0; i < size; ++i)
+                    {
+                        pdal.DimType type = types.at(i);
+                        Debug.Log("\t\tType [" + type.Id + ":" + type.IdName 
+                            + "] (" + type.Interpretation + ":" + type.InterpretationName
+                            + "): scale " + type.Scale
+                            + ", offset " + type.Offset);
+                    }
+                }
+
+                types.Dispose();
+            }
 
             view.Dispose();
             view = views.Next;
