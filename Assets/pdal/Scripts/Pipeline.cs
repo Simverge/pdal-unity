@@ -43,11 +43,12 @@ namespace pdal
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALValidatePipeline")]
 		private static extern bool validate(IntPtr pipeline);
 
-		//[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPointViews")]
-		//private static extern PDALPointViewIteratorPtr PDALGetPointViews(IntPtr pipeline);
+		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPointViews")]
+		private static extern IntPtr getViews(IntPtr pipeline);
 
 		/// The native C API PDAL pipeline pointer
 		private IntPtr mNative = IntPtr.Zero;
+		private PointViewIterator mViews = null;
 
 		/**
 		 * Creates an uninitialized and unexecuted pipeline.
@@ -76,6 +77,8 @@ namespace pdal
 		public void Dispose()
 		{
 			dispose(mNative);
+			mViews = null;
+			mNative = IntPtr.Zero;
 		}
 
 		/// The JSON representation of the PDAL pipeline
@@ -139,6 +142,24 @@ namespace pdal
 		public bool Valid
 		{
 			get { return validate(mNative); }
+		}
+
+		public PointViewIterator Views
+		{
+			get
+			{
+				if (mViews == null)
+				{
+					IntPtr nativeViews = getViews(mNative);
+
+					if (nativeViews != IntPtr.Zero)
+					{
+						mViews = new PointViewIterator(nativeViews);
+					}
+				}
+
+				return mViews;
+			}
 		}
 
 		/**
