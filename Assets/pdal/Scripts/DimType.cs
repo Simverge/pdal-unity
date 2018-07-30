@@ -83,5 +83,15 @@ using System.Text;
 				return buffer.ToString();
 			}
 		}
-	}
+
+        public double Scale
+        {
+            get { return mType.scale; }
+        }
+
+        public double Offset
+        {
+            get { return mType.offset; }
+        }
+    }
  }
