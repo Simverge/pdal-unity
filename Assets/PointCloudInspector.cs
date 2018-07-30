@@ -20,19 +20,41 @@ public class PointCloudInspector : MonoBehaviour
         Debug.Log("PDAL SHA1: " + config.Sha1);
         Debug.Log("PDAL Debug Info: " + config.DebugInfo);
 
-        string path = "Assets/pdal/Examples/stats.json";
+        string path = "Assets/pdal/Examples/sort.json";
         string json = File.ReadAllText(path);
-        Debug.Log("Pipeline JSON: " + json);
 
         pdal.Pipeline pipeline = new pdal.Pipeline(json);
 
-        int level = pipeline.LogLevel;
-        Debug.Log("Log Level: " + level);
-
-        long count = pipeline.Execute();
-        Debug.Log("Executed pipeline - point count: " + count);
+        long pointCount = pipeline.Execute();
+        Debug.Log("Executed pipeline - point count: " + pointCount);
+        Debug.Log("Log Level: " + pipeline.LogLevel);
+        Debug.Log("Pipeline JSON: " + json);
         Debug.Log("Result JSON: " + pipeline.Json);
 
+        pdal.PointViewIterator views = pipeline.Views;
+        pdal.PointView view = views.Next;
+
+        while (view != null)
+        {
+            Debug.Log("View " + view.Id);
+            Debug.Log("\tproj4: " + view.Proj4);
+            Debug.Log("\tWKT: " + view.Wkt);
+            Debug.Log("\tSize: " + view.Size);
+            Debug.Log("\tEmpty? " + view.Empty);
+
+            pdal.PointLayout layout = view.Layout;
+            Debug.Log("\tHas layout? " + (layout != null));
+
+    //        if (layout != null)
+      //      {
+
+        //    }
+
+            view.Dispose();
+            view = views.Next;
+        }
+
+        views.Dispose();
         pipeline.Dispose();
     }
 
