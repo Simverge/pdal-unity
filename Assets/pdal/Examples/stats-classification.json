@@ -7,7 +7,7 @@
         },
 		{
 		  "type":"filters.stats",
-		  "dimensions":"X,Y,Z,Classification",
+		  "dimensions":"Classification",
 		  "enumerate":"Classification"
 		}
     ]

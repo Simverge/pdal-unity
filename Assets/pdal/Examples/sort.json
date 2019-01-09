@@ -1,9 +1,0 @@
-{
-  "pipeline": [
-    "Assets/pdal/Data/1.2-with-color.las",
-    {
-        "type": "filters.sort",
-        "dimension": "X"
-    }
-  ]
-}
