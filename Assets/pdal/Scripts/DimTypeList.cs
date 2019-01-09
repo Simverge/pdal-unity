@@ -15,6 +15,9 @@ using System.Collections.Generic;
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimTypeListSize")]
 		private static extern uint getSize(IntPtr list);
 
+		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimTypeListByteCount")]
+		private static extern ulong getByteCount(IntPtr list);
+
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimType")]
 		[return:MarshalAs( UnmanagedType.Struct)]
 		private static extern DimType.NativeDimType getType(IntPtr list, uint index);
@@ -28,6 +31,21 @@ using System.Collections.Generic;
 		public DimTypeList(IntPtr nativeList)
 		{
 			mNative = nativeList;
+		}
+
+		public ulong ByteCount
+		{
+			get { return getByteCount(mNative); }
+		}
+
+		public IntPtr Native
+		{
+			get { return mNative; }
+		}
+
+		public uint Size
+		{
+			get { return getSize(mNative); }
 		}
 
 		public void Dispose()
@@ -46,11 +64,6 @@ using System.Collections.Generic;
 			}
 
 			return type;
-		}
-
-		public uint Size
-		{
-			get { return getSize(mNative); }
 		}
 	}
  }

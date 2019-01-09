@@ -46,12 +46,12 @@ using System.Text;
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetPackedPoint")]
 
-		private static extern uint getPackedPoint(IntPtr view, IntPtr types, ulong idx, ref byte[] buf);
+		private static extern uint getPackedPoint(IntPtr view, IntPtr types, ulong idx, [MarshalAs(UnmanagedType.LPArray)] byte[] buf);
 
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetAllPackedPoints")]
 
-		private static extern ulong getAllPackedPoints(IntPtr view, IntPtr types, ref byte[] buf);
+		private static extern ulong getAllPackedPoints(IntPtr view, IntPtr types, [MarshalAs(UnmanagedType.LPArray)] byte[] buf);
 
 		private IntPtr mNative = IntPtr.Zero;
 
@@ -126,6 +126,33 @@ using System.Text;
 			}
 		}
 
+        public byte[] GetAllPackedPoints(DimTypeList dims)
+        {
+            byte[] data = null;
+
+			if (this.Size > 0 && dims != null && dims.Size > 0)
+			{
+				ulong byteCount = this.Size * dims.ByteCount;
+				data = new byte[byteCount];
+				getAllPackedPoints(mNative, dims.Native, data);
+			}
+
+			return data;
+        }
+
+        public byte[] GetPackedPoint(DimTypeList dims, ulong idx)
+        {
+            byte[] data = null;
+
+			if (this.Size > idx && dims != null && dims.Size > 0)
+			{
+				data = new byte[dims.ByteCount];
+				getPackedPoint(mNative, dims.Native, idx, data);
+			}
+
+			return data;
+        }
+
 		public PointView Clone()
 		{
 			PointView clonedView = null;
@@ -138,8 +165,5 @@ using System.Text;
 
 			return clonedView;
 		}
-
-		// TODO Expose getPackedPoint
-		// TODO Expose getAllPackedPoints
 	}
  }

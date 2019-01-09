@@ -27,10 +27,13 @@ using System.Text;
 		private static extern NativeDimType getInvalidDimType();
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimTypeIdName")]
-		private static extern int getDimTypeIdName([MarshalAs(UnmanagedType.Struct)] NativeDimType type, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
+		private static extern int getIdName([MarshalAs(UnmanagedType.Struct)] NativeDimType type, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
 
 		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimTypeInterpretationName")]
-		private static extern int getDimTypeInterpretationName([MarshalAs(UnmanagedType.Struct)] NativeDimType type, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
+		private static extern int getInterpretationName([MarshalAs(UnmanagedType.Struct)] NativeDimType type, [MarshalAs(UnmanagedType.LPStr)] StringBuilder buffer, uint size);
+
+		[DllImport(PDALC_LIBRARY, EntryPoint="PDALGetDimTypeInterpretationByteCount")]
+		private static extern int getInterpretationByteCount([MarshalAs(UnmanagedType.Struct)] NativeDimType type);
 
 		private NativeDimType mType = getInvalidDimType();
 
@@ -63,7 +66,7 @@ using System.Text;
 			get
 			{
 				StringBuilder buffer = new StringBuilder(256);
-				getDimTypeIdName(mType, buffer, (uint) buffer.Capacity);
+				getIdName(mType, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
 		}
@@ -79,9 +82,14 @@ using System.Text;
 			get
 			{
 				StringBuilder buffer = new StringBuilder(256);
-				getDimTypeInterpretationName(mType, buffer, (uint) buffer.Capacity);
+				getInterpretationName(mType, buffer, (uint) buffer.Capacity);
 				return buffer.ToString();
 			}
+		}
+
+		public int InterpretationByteCount
+		{
+			get { return getInterpretationByteCount(mType); }
 		}
 
         public double Scale
