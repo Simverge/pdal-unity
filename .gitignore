@@ -3,9 +3,13 @@ Assets/pdal/Dll/*.exe*
 Assets/pdal/Dll/*.bat*
 
 *~
+*~.meta
 *.swp
+*.swp.meta
 *.bak
+*.bak.meta
 *.log
+*.log.meta
 
 [Ll]ibrary/
 [Tt]emp/
